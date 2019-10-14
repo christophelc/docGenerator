@@ -1,0 +1,12 @@
+logs
+target
+project/target
+.metals
+.bloop
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+.scannerwork

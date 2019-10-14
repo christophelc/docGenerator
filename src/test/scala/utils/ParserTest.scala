@@ -22,6 +22,27 @@ class ParserTest extends FlatSpec {
       case node =>
         println(s"[ ${node.productPrefix} --> $node ]")
     }
-    0
+    // no exception raised
+    assert(true)
+  }
+
+  "code under root3 folder in file Example.scala with an external library (scalaz)" should "be parsed" in {
+    val path = java.nio.file.Paths
+      .get(FileUtil.testResourcesPath + "root3/src/main/scala/Example",
+           "example.scala")
+    val bytes = java.nio.file.Files.readAllBytes(path)
+    val text = new String(bytes, "UTF-8")
+    val input = Input.VirtualFile(path.toString, text)
+    val exampleTree = input.parse[Source].get
+    println(exampleTree.syntax)
+    println("****")
+    println(exampleTree.stats)
+    println("****")
+    exampleTree.traverse {
+      case node =>
+        println(s"[ ${node.productPrefix} --> $node ]")
+    }
+    // no exception raised
+    assert(true)
   }
 }

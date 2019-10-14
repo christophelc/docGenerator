@@ -30,13 +30,11 @@ scalacOptions ++= Seq(
   "-Ywarn-nullary-override", // Warn when non-nullary overrides nullary, e.g. def foo() over def foo.
   "-Ywarn-numeric-widen", // Warn when numerics are widened.
   //"-Xlog-implicit-conversions",
-  "-Xlint:-unused,_"
 )
 
 sources in(Compile, doc) := Seq.empty
 publishArtifact in(Compile, packageDoc) := false
 
-scalaVersion := "2.12.4"
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
 javaOptions in Test := Seq("-Dlogger.resource=logback-test.xml")
