@@ -36,8 +36,6 @@ class ParserTest extends Specification with MyLogger {
         // TODO: relative path to function, object, class, type
         case Pkg(ref, _) =>
           println(s"=> package ${ref} <=")
-        case Defn.Class(_, classname, _, _, _) =>
-          println(s"=> class ${classname} <=")
         case Defn.Object(_, objectname, _) =>
           println(s"=> object ${objectname} <=")
         /*

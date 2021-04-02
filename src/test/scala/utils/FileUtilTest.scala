@@ -2,14 +2,16 @@ package utils
 
 import org.specs2.mutable.Specification
 
-class FileUtilTest extends Specification {
+class FileUtilTest extends Specification with MyLogger {
 
   val folderRoot = FileUtil.testResourcesPath + "root1"
 
   "repo1 and repo3 having a build.sbt file" should {
     "Be listed" in {
-      println(folderRoot)
-      println(FileUtil.repos(folderRoot))
+      logger.info(s"""
+          |Folder root: $folderRoot
+          | repos: ${FileUtil.repos(folderRoot)}
+          |""".stripMargin)
       val listReposWithBuildSbt: Set[String] =
         FileUtil
           .repos(folderRoot)

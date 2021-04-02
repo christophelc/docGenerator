@@ -1,11 +1,27 @@
 # docGenerator
 
-The aim of docGenerator is:
+This project is in progress.
 
-1- Scan modules and generate api documentation like scaladoc do.
-For an example, see <https://www.scala-lang.org/api/2.12.3/scala/collection/immutable/List.html>
+##0- To do list
 
-2- Generate dependencies between modules
+- Look at the SemanticDb project
+
+- As regard the Scalameta project:
+ - see how to manage import
+ - use sbt dialect to read sbt files
+ - When the return value is not set, scalameta don't know it. Check how scala compiler infer this.
+
+- Take into account version number
+
+##Aim of docGenerator
+
+###Scan modules and generate api documentation like scaladoc do.
+
+Iterate over folders recursively and extract build.sbt files.
+
+Generate documentation per module
+
+###Manage dependencies between modules
 
 For example, if we have:
 
@@ -16,6 +32,6 @@ repo1/
 repo2/
  - module3 (calling module1)
 
-We should see in the documentation generated that module1 and module3 are linked. We should be able to navigate from module3 to module1 to quickly see its api documentation generated during the first step.
+We should see in the documentation generated that module1 and module3 are linked. 
+Then generate an html file from which we should be able to navigate from module3 to module1 to quickly browse the structure of the project.
 
-3 - Take into account version number

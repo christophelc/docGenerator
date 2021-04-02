@@ -59,7 +59,7 @@ class QuasiquoteTest extends Specification with MyLogger {
     }
   }
 
-  "Custon traversal" should {
+  "Custom traversal" should {
     "show details of the parsed nodes" in {
       var mutParsed = List.newBuilder[String]
       val traverser = new Traverser {
@@ -67,7 +67,7 @@ class QuasiquoteTest extends Specification with MyLogger {
 
           tree match {
             case Pat.Var(name) =>
-              mutParsed += s"var: $name (stopped here)"
+              mutParsed += s"var: $name (stopped here. Don't visit the children by calling supper.apply)"
             case node =>
               mutParsed += s"${node.productPrefix} : $node"
               super.apply(node)
@@ -103,5 +103,4 @@ class QuasiquoteTest extends Specification with MyLogger {
       newTree.toString() must contain("function(b)")
     }
   }
-
 }
