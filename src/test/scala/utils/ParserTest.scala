@@ -1,10 +1,10 @@
 package utils
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers._
+import org.specs2.mutable.Specification
+
 import scala.meta._
 
-class ParserTest extends FlatSpec {
+class ParserTest extends Specification with MyLogger {
 
   // TODO: extract comments
   /*
@@ -20,61 +20,59 @@ class ParserTest extends FlatSpec {
     }
   }
    */
-  "code under root2 folder in file Example.scala" should "be parsed" in {
-    val path = java.nio.file.Paths
-      .get(FileUtil.testResourcesPath + "root2/src/main/scala/Example",
-           "example.scala")
-    val bytes = java.nio.file.Files.readAllBytes(path)
-    val text = new String(bytes, "UTF-8")
-    val input = Input.VirtualFile(path.toString, text)
-    val exampleTree = input.parse[Source].get
-    println(exampleTree.syntax)
-    println("**** begin root2 example")
-    println(exampleTree.stats)
-    println("**** end root2 tree")
+  "code under root2 folder in file Example.scala" should {
+    "Be parsed" in {
+      val path = java.nio.file.Paths
+        .get(FileUtil.testResourcesPath + "root2/src/main/scala/Example", "example.scala")
+      val input       = FileUtil.toVirtualFile(path)
+      val exampleTree = input.parse[Source].get
+      println(exampleTree.syntax)
+      println("**** begin root2 example")
+      println(exampleTree.stats)
+      println("**** end root2 tree")
 
-    // see https://astexplorer.net
-    exampleTree.traverse {
-      // TODO: relative path to function, object, class, type
-      case Pkg(ref, _) =>
-        println(s"=> package ${ref} <=")
-      case Defn.Class(_, classname, _, _, _) =>
-        println(s"=> class ${classname} <=")
-      case Defn.Object(_, objectname, _) =>
-        println(s"=> object ${objectname} <=")
-      /*
-      case tree @ Defn.Def(_, fname, _, lParam, _, _) =>
-        val comment = findComment(tree, exampleTree)
-        println(s"=> function ${fname} ${lParam.toString} <=")
-       */
-      case node =>
-        println("--")
-        println(s"[ ${node.productPrefix} --> $node ]")
+      // see https://astexplorer.net
+      exampleTree.traverse {
+        // TODO: relative path to function, object, class, type
+        case Pkg(ref, _) =>
+          println(s"=> package ${ref} <=")
+        case Defn.Class(_, classname, _, _, _) =>
+          println(s"=> class ${classname} <=")
+        case Defn.Object(_, objectname, _) =>
+          println(s"=> object ${objectname} <=")
+        /*
+        case tree @ Defn.Def(_, fname, _, lParam, _, _) =>
+          val comment = findComment(tree, exampleTree)
+          println(s"=> function ${fname} ${lParam.toString} <=")
+         */
+        case node =>
+          println("--")
+          println(s"[ ${node.productPrefix} --> $node ]")
+      }
+      println("**** end root2 example")
+      // no exception raised
+      true mustEqual (true)
     }
-    println("**** end root2 example")
-    // no exception raised
-    assert(true)
   }
 
-  "code under root3 folder in file Example.scala with an external library (scalaz)" should "be parsed" in {
-    val path = java.nio.file.Paths
-      .get(FileUtil.testResourcesPath + "root3/src/main/scala/Example",
-           "example.scala")
-    val bytes = java.nio.file.Files.readAllBytes(path)
-    val text = new String(bytes, "UTF-8")
-    val input = Input.VirtualFile(path.toString, text)
-    val exampleTree = input.parse[Source].get
-    println(exampleTree.syntax)
-    println("**** begin root3 example")
-    println(exampleTree.stats)
-    println("**** end root3 tree")
-    exampleTree.traverse {
-      case node =>
-        println("--")
-        println(s"[ ${node.productPrefix} --> $node ]")
+  "code under root3 folder in file Example.scala with an external library (scalaz)" should {
+    "Be parsed" in {
+      val path = java.nio.file.Paths
+        .get(FileUtil.testResourcesPath + "root3/src/main/scala/Example", "example.scala")
+      val input       = FileUtil.toVirtualFile(path)
+      val exampleTree = input.parse[Source].get
+      println(exampleTree.syntax)
+      println("**** begin root3 example")
+      println(exampleTree.stats)
+      println("**** end root3 tree")
+      exampleTree.traverse {
+        case node =>
+          println("--")
+          println(s"[ ${node.productPrefix} --> $node ]")
+      }
+      println("**** end root3 example")
+      // no exception raised
+      true mustEqual (true)
     }
-    println("**** end root3 example")
-    // no exception raised
-    assert(true)
   }
 }

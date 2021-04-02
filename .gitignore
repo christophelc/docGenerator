@@ -3,8 +3,9 @@ target
 project/target
 .metals
 .bloop
+.bsp
 /.idea
-/.idea_modules
+.idea_modules
 /.classpath
 /.project
 /.settings

@@ -1,23 +1,22 @@
 package utils
 
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers._
+import org.specs2.mutable.Specification
 
-import better.files._
+class FileUtilTest extends Specification {
 
-class FileUtilTest extends FlatSpec {
+  val folderRoot = FileUtil.testResourcesPath + "root1"
 
-  val FolderRoot = FileUtil.testResourcesPath + "root1"
-
-  "repo1 and repo3 having a build.sbt file" should "be listed" in {
-    println(FolderRoot)
-    println(FileUtil.repos(FolderRoot))
-    val listReposWithBuildSbt: Set[String] =
-      FileUtil
-        .repos(FolderRoot)
-        .map(f => f.path.getFileName.toString)
-        .toSet
-    listReposWithBuildSbt should equal(Set("repo1", "repo3"))
+  "repo1 and repo3 having a build.sbt file" should {
+    "Be listed" in {
+      println(folderRoot)
+      println(FileUtil.repos(folderRoot))
+      val listReposWithBuildSbt: Set[String] =
+        FileUtil
+          .repos(folderRoot)
+          .map(f => f.path.getFileName.toString)
+          .toSet
+      listReposWithBuildSbt mustEqual (Set("repo1", "repo3"))
+    }
   }
 
 }
